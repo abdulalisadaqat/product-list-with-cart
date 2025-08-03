@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+	font-family: "redhat";
+	src: url("./assets/fonts/RedHatText-VariableFont_wght.ttf");
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font-size: 16px;
+	font-family: "redhat";
+}
