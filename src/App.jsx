@@ -57,7 +57,7 @@ function App() {
 							// if cart is empty
 							<div className="empty-state text-center">
 								<img
-									src="/public/images/illustration-empty-cart.svg"
+									src="images/illustration-empty-cart.svg"
 									alt="empty cart image"
 									className="mx-auto mb-5"
 								/>
@@ -110,7 +110,7 @@ function App() {
 								</div>
 								<div className="w-full flex items-center justify-center gap-2 py-5 bg-orange-50 rounded-lg">
 									<img
-										src="/public/images/icon-carbon-neutral.svg"
+										src="images/icon-carbon-neutral.svg"
 										alt="carbon-neutral-icon"
 									/>
 									<p>
@@ -136,7 +136,7 @@ function App() {
 						<div className="modal-content">
 							<div className="modal-header">
 								<img
-									src="/public/images/icon-order-confirmed.svg"
+									src="images/icon-order-confirmed.svg"
 									alt="icon-order-confirmed"
 								/>
 								<h2 className="text-4xl font-bold my-4">Order Confirmed</h2>

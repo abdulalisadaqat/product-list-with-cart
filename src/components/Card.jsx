@@ -52,7 +52,7 @@ function Card({ product, cartItems, setCartItems }) {
 									addToCart();
 								}}
 							>
-								<img src="public/images/icon-add-to-cart.svg" alt="" />
+								<img src="images/icon-add-to-cart.svg" alt="" />
 								Add to Cart
 							</button>
 						) : (
