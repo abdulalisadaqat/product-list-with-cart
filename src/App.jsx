@@ -4,6 +4,7 @@ import Card from "./components/Card";
 import { products } from "./data";
 function App() {
   const [cartItems, setCartItems] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const removeFromCart = (id) => {
     setCartItems((prevItems) =>
@@ -12,13 +13,15 @@ function App() {
   };
 
   const confirmOrder = () => {
-    document.querySelector(".modal").classList.toggle("hidden");
+    document.querySelector("#main").setAttribute("aria-hidden", "true");
+    setModalOpen(true);
   };
 
   // Reset cart items and close the modal
   const startNewOrder = () => {
-    document.querySelector(".modal").classList.toggle("hidden");
+    document.querySelector("#main").removeAttribute("aria-hidden");
     setCartItems([]);
+    setModalOpen(false);
     window.scrollTo(0, 0);
   };
 
@@ -32,7 +35,9 @@ function App() {
   return (
     <>
       <main className="container mx-auto lg:py-16 xl:p-20 p-6">
-        <div className="grid grid-cols-[2.8fr_1.2fr] max-lg:grid-cols-1 gap-8">
+        <div
+          id="main"
+          className="grid grid-cols-[2.8fr_1.2fr] max-lg:grid-cols-1 gap-8">
           {/* products list */}
           <section className="products">
             <h1 className="text-4xl font-bold mb-6">Desserts</h1>
@@ -130,69 +135,73 @@ function App() {
         </div>
 
         {/* order confirmation dialog */}
-        <div
-          role="dialog"
-          className="modal fixed top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center max-xs:items-end">
-          <div className="modal-dialog bg-white rounded-lg p-8 max-xs:w-full max-xs:rounded-b-none">
-            <div className="modal-content">
-              <div className="modal-header">
-                <img
-                  src="images/icon-order-confirmed.svg"
-                  alt="icon-order-confirmed"
-                />
-                <h2 className="text-4xl font-bold my-4">Order Confirmed</h2>
-                <p className="text-sm text-red-950">
-                  We hope you enjoy your food!
-                </p>
-              </div>
-              <div className="modal-body bg-orange-50 rounded-lg px-5 my-6">
-                <ul>
-                  {cartItems?.map((item) => (
-                    <li
-                      className="border-b py-5 flex items-center justify-between"
-                      key={item.product.id}>
-                      <img
-                        src={item.product.image.thumbnail}
-                        alt={item.product.name}
-                        className="w-14 h-14 rounded-md object-cover mr-4"
-                      />
-                      <div className="detail w-full text-start">
-                        <h3 className="font-semibold">{item.product.name}</h3>
-                        <div className="flex items-center gap-2">
-                          <span className="text-red-600 font-semibold">
-                            {item.quantity}x
-                          </span>
-                          <span className="text-red-950">
-                            @ ${item.product.price}
-                          </span>
-                        </div>
-                      </div>
-                      <p className="font-semibold ml-4">
-                        ${(item.product.price * item.quantity).toFixed(2)}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-                <div className="w-full flex items-center justify-between py-5">
-                  <p>Order Total</p>
-                  <span className="text-2xl font-bold">
-                    ${cartTotalPrice.toFixed(2)}
-                  </span>
+        {modalOpen && (
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="order summary modal"
+            className="modal fixed top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center max-xs:items-end">
+            <div className="modal-dialog bg-white rounded-lg p-8 max-xs:w-full max-xs:rounded-b-none">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <img
+                    src="images/icon-order-confirmed.svg"
+                    alt="icon-order-confirmed"
+                  />
+                  <h2 className="text-4xl font-bold my-4">Order Confirmed</h2>
+                  <p className="text-sm text-red-950">
+                    We hope you enjoy your food!
+                  </p>
                 </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="w-full bg-red-600 text-white text-center font-semibold rounded-full py-3 hover:bg-red-700 transition-all duration-200 ease-in-out"
-                  onClick={() => {
-                    startNewOrder();
-                  }}>
-                  Start New Order
-                </button>
+                <div className="modal-body bg-orange-50 rounded-lg px-5 my-6">
+                  <ul>
+                    {cartItems?.map((item) => (
+                      <li
+                        className="border-b py-5 flex items-center justify-between"
+                        key={item.product.id}>
+                        <img
+                          src={item.product.image.thumbnail}
+                          alt={item.product.name}
+                          className="w-14 h-14 rounded-md object-cover mr-4"
+                        />
+                        <div className="detail w-full text-start">
+                          <h3 className="font-semibold">{item.product.name}</h3>
+                          <div className="flex items-center gap-2">
+                            <span className="text-red-600 font-semibold">
+                              {item.quantity}x
+                            </span>
+                            <span className="text-red-950">
+                              @ ${item.product.price}
+                            </span>
+                          </div>
+                        </div>
+                        <p className="font-semibold ml-4">
+                          ${(item.product.price * item.quantity).toFixed(2)}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="w-full flex items-center justify-between py-5">
+                    <p>Order Total</p>
+                    <span className="text-2xl font-bold">
+                      ${cartTotalPrice.toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="w-full bg-red-600 text-white text-center font-semibold rounded-full py-3 hover:bg-red-700 transition-all duration-200 ease-in-out"
+                    onClick={() => {
+                      startNewOrder();
+                    }}>
+                    Start New Order
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </main>
     </>
   );
